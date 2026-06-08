@@ -1,23 +1,32 @@
-import React from 'react'
 import { FaMagnifyingGlass } from "react-icons/fa6";
-const SearchInput = ({ searchTerm, onInputChange /*, onSearchClick*/ }) => {
 
-    
+const SearchInput = ({ searchTerm, onInputChange, onSearchClick, inputId }) => {
   return (
-    <div className="flex items-center bg-slate-200  p-1 px-2 w-full rounded-full gap-3">
-        <FaMagnifyingGlass className='mx-2 h-[20px] w-[20px]' />
-        <input
-          type="text"
-          placeholder="Search games"
-          name=""
-          id=""
-          className="bg-transparent outline-none w-full  h-[35px]"
-          value={searchTerm}
-          onChange={(e) => onInputChange(e.target.value)}
-        />
-        {/* <button onClick={(onSearchClick)} className='btn bg-slate-900 text-white px-4 py-2 rounded-full'>Search</button> */}
-      </div>
-  )
-}
+    <div className="flex w-full min-w-0 items-center gap-2 rounded-full bg-slate-100 p-1 pl-3 dark:bg-slate-800">
+      <FaMagnifyingGlass className="shrink-0 text-stone-500 dark:text-slate-400" />
+      <input
+        id={inputId}
+        type="text"
+        placeholder="Search games..."
+        className="h-9 min-w-0 flex-1 bg-transparent text-sm text-stone-900 outline-none placeholder:text-stone-400 dark:text-white sm:text-base"
+        value={searchTerm}
+        onChange={(e) => onInputChange(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && onSearchClick) onSearchClick(e);
+        }}
+      />
+      {onSearchClick ? (
+        <button
+          type="button"
+          onClick={onSearchClick}
+          className="shrink-0 rounded-full bg-violet-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-violet-700 sm:px-4"
+        >
+          <span className="hidden sm:inline">Search</span>
+          <span className="sm:hidden">Go</span>
+        </button>
+      ) : null}
+    </div>
+  );
+};
 
-export default SearchInput
+export default SearchInput;
